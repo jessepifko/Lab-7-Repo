@@ -2,6 +2,7 @@
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace Lab_7_Regular_Expressions
 {
@@ -54,13 +55,40 @@ namespace Lab_7_Regular_Expressions
             {
                 Console.WriteLine("Phone number is not valid!");
             }
-            
+            Console.WriteLine();
+
+            //Checking date validiity
+            Console.WriteLine("Please enter a valid date: ");
+            string tempDate = Console.ReadLine();
+
+            if (IsDate(tempDate) == true)
+            {
+                Console.WriteLine("Date is valid!");
+            }
+            else
+            {
+                Console.WriteLine("Date is not valid!");
+            }
             
         }
 
+        public static bool IsDate(string tempDate)
+        {
+            DateTime fromDateValue;
+            var formats = new[] { "dd/MM/yyyy", "yyyy-MM-dd" };
+            if (DateTime.TryParseExact(tempDate, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out fromDateValue))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         // Write a method that will validate phone numbers. A phone number should
         // be in the following format: {area code of 3 digits} - {3 digits} - {4 digits}
-
         public static Boolean IsPhoneNumber(string number)
         {
             if (Regex.Match(number, @"^(\+[0-9]{10})$").Success)
