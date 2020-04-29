@@ -45,7 +45,7 @@ namespace Lab_7_Regular_Expressions
             Console.WriteLine("Enter a valid phone number: ");
             string number = Console.ReadLine();
 
-            Console.WriteLine(IsPhoneNumber(number));
+            //Console.WriteLine(IsPhoneNumber(number));
 
             if (IsPhoneNumber(number) == true)
             {
@@ -61,6 +61,8 @@ namespace Lab_7_Regular_Expressions
             Console.WriteLine("Please enter a valid date: ");
             string tempDate = Console.ReadLine();
 
+           // Console.WriteLine(IsDate(tempDate));
+
             if (IsDate(tempDate) == true)
             {
                 Console.WriteLine("Date is valid!");
@@ -72,11 +74,10 @@ namespace Lab_7_Regular_Expressions
             
         }
 
+        //Method to check if date is in the format : mm/dd/yyyy
         public static bool IsDate(string tempDate)
         {
-            DateTime fromDateValue;
-            var formats = new[] { "dd/MM/yyyy", "yyyy-MM-dd" };
-            if (DateTime.TryParseExact(tempDate, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out fromDateValue))
+            if (Regex.IsMatch(tempDate, @"(\d{2})/(\d{2})/(\d{4})"))
             {
                 return true;
             }
@@ -87,11 +88,10 @@ namespace Lab_7_Regular_Expressions
         }
 
 
-        // Write a method that will validate phone numbers. A phone number should
-        // be in the following format: {area code of 3 digits} - {3 digits} - {4 digits}
+        // Method to check if phone number is in format xxx-xxx-xxxx
         public static Boolean IsPhoneNumber(string number)
         {
-            if (Regex.Match(number, @"^(\+[0-9]{10})$").Success)
+            if (Regex.Match(number, @"(\d{3})-(\d{3})-(\d{4})").Success)
             {
                 return true;
             }
@@ -104,19 +104,14 @@ namespace Lab_7_Regular_Expressions
         //Names can only have alphabets, they should start with a capital letter, 
         //and they have a maximum length of 30.
         public static Boolean IsAlpha(string name)
-        {
-            
-
+        {         
             if (Regex.IsMatch(name, @"^[a-z A-Z]{1,30}$"))
             {
                 return true;
-              
             }
             else 
             {
-                return false;
-              
-                
+                return false;            
             }
         }
 
